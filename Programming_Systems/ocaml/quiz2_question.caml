@@ -1,0 +1,4 @@
+let rec interesting = function
+	  ([],_) -> true
+	| (a,b) -> if(List.mem (List.hd a) b) then interesting((List.tl a),b)
+				  else false;;

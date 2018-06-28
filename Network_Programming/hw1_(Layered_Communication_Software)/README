@@ -1,0 +1,19 @@
+Eric Paulz
+CPSC 3600-001
+- README file for HW1
+
+FILE DESCRIPTIONS
+Only .h and .c files are included, no extra input files.
+
+KNOWN PROBLEMS
+When adding up the bytes in 'name' and 'value', the checksum never
+seems to work for short strings.
+
+DESIGN
+No special comments.
+
+SPECIAL BUILDING INSTRUCTIONS
+n/a
+
+OTHER INFORMATION
+n/a

@@ -1,0 +1,6 @@
+- everything since Quiz 2:
+- OO representations in ocaml
+- ocaml profiling
+- semantics (general)
+- axiomatic semantics
+- copyrights and software licenses

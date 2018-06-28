@@ -1,0 +1,175 @@
+(* Eric Paulz (epaulz)  *)
+(* CPSC 3520             *)
+(* SDE2 - OCaml        *)
+
+							
+(*-----------------------------------------------------------------------------------------------*)
+
+(**
+Prototype: get_table_values_cell([i;j], table)
+Input(s): tuple of ([<column>;<row>], table)
+Returned Value: cell with string values
+Side Effects: none
+Signature: val get_table_values_cell : int list * 'a list list -> 'a = <fun>
+*)
+
+let get_table_values_cell(index_lst,table) = match index_lst,table with
+      [],_ -> []
+    | _,[] -> []
+    | _::_,_::_ -> List.nth (List.nth table ((List.nth index_lst 1)-1)) ((List.nth index_lst 0)-1);;
+
+
+(*-----------------------------------------------------------------------------------------------*)
+
+(**
+Prototype: cell_products [cell1;cell2]
+Input(s): list containing 2 cells
+Returned Value: resultant list of strings
+Side Effects: none
+Signature: val cell_products : string list list -> string list = <fun>
+*)	
+	
+let rec merge(x,lst) = match lst with
+	  []   -> []
+	| h::t -> (x^h)::(merge(x,t));;
+	
+let rec prod(lst1,lst2) = match lst1,lst2 with
+	  [],_ -> []
+	| _,[] -> []
+	| h::t,_::_ -> (merge(h,lst2))@(prod(t,lst2));;
+
+let cell_products cells = match cells with
+	  []   -> []
+	| _::_ -> prod((List.nth cells 0),(List.nth cells 1));;
+
+
+(*-----------------------------------------------------------------------------------------------*)
+
+(**
+Prototype: form_row1_cell(element, productions)
+Input(s): tuple of single terminal element, productions list
+Returned Value: corresponding cell in first row of CYK table
+Side Effects: none
+Signature: val form_row1_cell : 'a * 'a list list -> 'a list = <fun>
+Notes: Forms row 1 cells of CYK table as a special case
+*)
+
+let rec form(x,lst) = match lst with
+	  []   -> []
+	| h::t -> if (List.nth h 1) = x then (List.nth h 0)::(form(x,t))
+			  else form(x,t);;
+			  
+let form_row1_cell(element,productions) = form(element,productions);;
+
+
+(*-----------------------------------------------------------------------------------------------*)
+
+(**
+Prototype: equiv(ca, cb)
+Input(s): tuple of 2 cells
+Returned Value: true of false
+Side Effects: none
+Signature: val equiv : 'a list * 'a list -> bool = <fun>
+*)
+
+let rec insert x = function
+	| []   -> [x]
+	| h::t -> if x < h then x::h::t
+			  else h::insert x t;;
+			  
+let rec sort = function
+	| []   -> []
+	| h::t -> insert h (sort t);;
+
+let rec compare(x,y) = match x,y with
+	  [],[]       -> true
+	| _::_,[]     -> false
+	| [],_::_     -> false
+	| h::t,hh::tt -> h=hh && compare(t,tt);;
+
+let equiv(ca,cb) = 
+	if(List.length(ca) != List.length(cb)) then false
+	else compare(sort(ca),sort(cb));;
+
+
+(*-----------------------------------------------------------------------------------------------*)
+
+(**
+Prototype: row_equivalent(rowA, rowB)
+Input(s): tuple of 2 rows
+Returned Value: true or false
+Side Effects: none
+Signature: val row_equivalent : 'a list list * 'a list list -> bool = <fun>
+*)
+
+let rec r_eq(x,y) = match x,y with
+	  [],[]       -> true
+	| _::_,[]     -> false
+	| [],_::_     -> false
+	| x::xs,y::ys -> equiv(x,y) && r_eq(xs,ys);;
+
+let row_equivalent(rowA,rowB) = 
+	if(List.length(rowA) != List.length(rowB)) then false
+	else r_eq(rowA,rowB);;
+	
+
+(*-----------------------------------------------------------------------------------------------*)
+
+(**
+Prototype: table_equivalent(tableA, tableB)
+Input(s): tuple of 2 tables
+Returned Value: true or false
+Side Effects: none
+Signature: val table_equivalent : 'a list list list * 'a list list list -> bool = <fun>
+*)
+
+let rec t_eq(x,y) = match x, y with
+	  [],[]       -> true
+	| _::_,[]     -> false
+	| [],_::_     -> false
+	| x::xs,y::ys -> row_equivalent(x,y) && t_eq(xs,ys);;
+
+let table_equivalent(tableA,tableB) = 
+	if(List.length(tableA) != List.length(tableB)) then false
+	else t_eq(tableA,tableB);;
+	
+
+(*-----------------------------------------------------------------------------------------------*)
+
+(**
+Prototype: valid_production production
+Input(s): a list
+Returned Value: true or false
+Side Effects: none
+Signature: val valid_production : string list -> bool = <fun>
+Notes: true if production is valid format and CNF
+*)
+
+let valid_production production = match production with
+	  []   -> false
+	| h::t -> if ((String.length h) = 1 && (Char.code (String.get h 0)) < 97) && 
+				 (((String.length (List.hd t)) = 1 && (Char.code (String.get (List.hd t) 0)) > 96) ||
+				  ((String.length (List.hd t)) = 2 && (Char.code (String.get (List.hd t) 0) < 97) && 
+				  									  (Char.code (String.get (List.hd t) 1) < 97))) then true
+			  else false;;  
+			
+
+(*-----------------------------------------------------------------------------------------------*)
+
+(**
+Prototype: valid_production_list productionList
+Input(s): list of productions
+Returned Value: true or false
+Side Effects: none
+Signature: val valid_production_list : string list list -> bool = <fun>
+*)
+
+let rec vp x = match x with
+	  [] -> true
+	| h::t -> valid_production h && vp t;;
+
+let valid_production_list productionList = 
+	vp productionList;;	
+
+
+(*---END-----------------------------------------------------------------------------------------*)

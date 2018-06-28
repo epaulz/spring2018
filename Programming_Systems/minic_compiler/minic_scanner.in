@@ -1,0 +1,23 @@
+%{
+#include "minic_parser.y"
+%}
+
+ID [a-z][a-z0-9]*
+A_NUM [0-9]+
+
+%%
+[ \r\t\n]+ /* whitespace */
+"(" return LPARENS;
+")" return RPARENS;
+"{" return LBRACE;
+"}" return RBRACE;
+"=" return ASSIGN;
+";" return SEMICOLON;
+"," return COMMA;
+int return INT;
+void return VOID;
+main return MAIN;
+return return RETURN;
+{ID} return IDE;
+{A_NUM} return NUM;
+%%

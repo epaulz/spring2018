@@ -1,0 +1,166 @@
+root@LAPTOP-NLCC5G3D:/mnt/c/Users/Eric/spring18/3520/sde2_(OCaml)# ledit ocaml
+        OCaml version 4.02.3
+
+# #use "sde2.caml";;
+val get_table_values_cell : int list * 'a list list list -> 'a list = <fun>
+val merge : string * string list -> string list = <fun>
+val prod : string list * string list -> string list = <fun>
+val cell_products : string list list -> string list = <fun>
+val form : 'a * 'a list list -> 'a list = <fun>
+val form_row1_cell : 'a * 'a list list -> 'a list = <fun>
+val insert : 'a -> 'a list -> 'a list = <fun>
+val sort : 'a list -> 'a list = <fun>
+val compare : 'a list * 'a list -> bool = <fun>
+val equiv : 'a list * 'a list -> bool = <fun>
+val r_eq : 'a list list * 'a list list -> bool = <fun>
+val row_equivalent : 'a list list * 'a list list -> bool = <fun>
+val t_eq : 'a list list list * 'a list list list -> bool = <fun>
+val table_equivalent : 'a list list list * 'a list list list -> bool = <fun>
+val valid_production : string list -> bool = <fun>
+val vp : string list list -> bool = <fun>
+val valid_production_list : string list list -> bool = <fun>
+# let prod1 = ["S";"AB"];;
+val prod1 : string list = ["S"; "AB"]
+# let prod2 = ["A";"a"];;
+val prod2 : string list = ["A"; "a"]
+# let prod3 = ["B";"b"];;
+val prod3 : string list = ["B"; "b"]
+# let prod4 = ["C";"b"];;
+val prod4 : string list = ["C"; "b"]
+# let productions = [prod1;prod2;prod3;prod4];;
+val productions : string list list =
+  [["S"; "AB"]; ["A"; "a"]; ["B"; "b"]; ["C"; "b"]]
+# let sample_table4 = [[["11"];["21"];["31"];["41"]];[["12"];["22"];["32"]];[["13"];["23"]];[["14"]]];;
+val sample_table4 : string list list list =
+  [[["11"]; ["21"]; ["31"]; ["41"]]; [["12"]; ["22"]; ["32"]];
+   [["13"]; ["23"]]; [["14"]]]
+# get_table_values_cell([4;1],sample_table4);;
+- : string list = ["41"]
+# get_table_values_cell([2;2],sample_table4);;
+- : string list = ["22"]
+# cell_production[["A"];["B";"C"]];;
+Error: Unbound value cell_production
+Hint: Did you mean cell_products?
+# cell_products[["A"];["B";"C"]];;
+- : string list = ["AB"; "AC"]
+# cell_products[["A";"B"];["C";"D";"E"]];;
+- : string list = ["AC"; "AD"; "AE"; "BC"; "BD"; "BE"]
+# cell_products[["A";"B"];[]];;
+- : string list = []
+# cell_products[[];["Z"]];;
+- : string list = []
+# form_row1_cell("a",productions);;
+- : string list = ["A"]
+# form_row1_cell("b",productions);;
+- : string list = ["B"; "C"]
+# equiv([1;5;3;0],[1;5;3]);;
+- : bool = false
+# equiv([1;5;3;0],[1;5;3;0]);;
+- : bool = true
+# equiv([1;5;3;0],[5;3;0;1]);;
+- : bool = true
+# equiv([1;5;3;0],[]);;
+- : bool = false
+# equiv([],[]);;
+- : bool = true
+# let row1 = [["A"];["A"];["B";"C"];["B";"C"]];;
+val row1 : string list list = [["A"]; ["A"]; ["B"; "C"]; ["B"; "C"]]
+# let row1mod = [["A"];["A"];["B";"C"];["C";"B"]];;
+val row1mod : string list list = [["A"]; ["A"]; ["B"; "C"]; ["C"; "B"]]
+# let row1mod2 = [["A"];["A"];["C";"C"];["B";"B"]];;
+val row1mod2 : string list list = [["A"]; ["A"]; ["C"; "C"]; ["B"; "B"]]
+# let row1mod3 = [["A"];["B";"C"];["A"];["B";"B"]];;
+val row1mod3 : string list list = [["A"]; ["B"; "C"]; ["A"]; ["B"; "B"]]
+# row_equivalent(row1,row1mod);;
+- : bool = true
+# row_equivalent(row1,row1mod2);;
+- : bool = false
+# row_equivalent(row1,row1mod3);;
+- : bool = false
+# let tablebook = [[["A"];["A"];["B";"C"];["B";"C"]];[["C"];["S";"A"];["S";"B";"A"]];[["C";"A"];["C";"S";"A"]];[["C";"B";"S";"A"]]];;
+val tablebook : string list list list =
+  [[["A"]; ["A"]; ["B"; "C"]; ["B"; "C"]];
+   [["C"]; ["S"; "A"]; ["S"; "B"; "A"]]; [["C"; "A"]; ["C"; "S"; "A"]];
+   [["C"; "B"; "S"; "A"]]]
+# let tablebook = [[["A"];["A"];["B";"C"];["B";"C"]];[["C"];["A";"S"];["B";"A";"S"]];[["C";"A"];["A";"S";"C"]];[["C";"B";"S";"A"]]];;
+val tablebook : string list list list =
+  [[["A"]; ["A"]; ["B"; "C"]; ["B"; "C"]];
+   [["C"]; ["A"; "S"]; ["B"; "A"; "S"]]; [["C"; "A"]; ["A"; "S"; "C"]];
+   [["C"; "B"; "S"; "A"]]]
+# let tablebook = [[["A"];["A"];["B";"C"];["B";"C"]];[["C"];["A";"G"];["B";"A";"S"]];[["C";"A"];["A";"S";"C"]];[["C";"B";"S";"A"]]];;
+val tablebook : string list list list =
+  [[["A"]; ["A"]; ["B"; "C"]; ["B"; "C"]];
+   [["C"]; ["A"; "G"]; ["B"; "A"; "S"]]; [["C"; "A"]; ["A"; "S"; "C"]];
+   [["C"; "B"; "S"; "A"]]]
+# table_equivalent(tablebook,tablebook);;
+- : bool = true
+# table_equivalent(tablebook,tablebook2);;
+Error: Unbound value tablebook2
+Hint: Did you mean tablebook?
+# let tablebook = [[["A"];["A"];["B";"C"];["B";"C"]];[["C"];["S";"A"];["S";"B";"A"]];[["C";"A"];["C";"S";"A"]];[["C";"B";"S";"A"]]];;
+val tablebook : string list list list =
+  [[["A"]; ["A"]; ["B"; "C"]; ["B"; "C"]];
+   [["C"]; ["S"; "A"]; ["S"; "B"; "A"]]; [["C"; "A"]; ["C"; "S"; "A"]];
+   [["C"; "B"; "S"; "A"]]]
+# let tablebook2 = [[["A"];["A"];["B";"C"];["B";"C"]];[["C"];["A";"S"];["B";"A";"S"]];[["C";"A"];["A";"S";"C"]];[["S";"B";"C";"A"]]];;
+val tablebook2 : string list list list =
+  [[["A"]; ["A"]; ["B"; "C"]; ["B"; "C"]];
+   [["C"]; ["A"; "S"]; ["B"; "A"; "S"]]; [["C"; "A"]; ["A"; "S"; "C"]];
+   [["S"; "B"; "C"; "A"]]]
+# let tablebook3 = [[["A"];["A"];["B";"C"];["B";"C"]];[["C"];["A";"G"];["B";"A";"S"]];[["C";"A"];["A";"S
+val tablebook3 : string list list list =
+  [[["A"]; ["A"]; ["B"; "C"]; ["B"; "C"]];
+   [["C"]; ["A"; "G"]; ["B"; "A"; "S"]]; [["C"; "A"]; ["A"; "S"; "C"]];
+   [["S"; "B"; "C"; "A"]]]
+# table_equivalent(tablebook,tablebook);;
+- : bool = true
+# table_equivalent(tablebook,tablebook2);;
+- : bool = true
+# table_equivalent(tablebook,tablebook3);;
+- : bool = false
+# let prodb1 = ["s";"AB"];;
+val prodb1 : string list = ["s"; "AB"]
+# let prodb2 = ["S";"A"];;
+val prodb2 : string list = ["S"; "A"]
+# let prodb3 = ["AB";"CD"];;
+val prodb3 : string list = ["AB"; "CD"]
+# let prodb4 = ["s";"cAB"];;
+val prodb4 : string list = ["s"; "cAB"]
+# valid_production prod1;;
+- : bool = true
+# valid_production prod2;;
+- : bool = true
+# valid_production prodb1;;
+- : bool = false
+# valid_production prodb2;;
+- : bool = false
+# valid_production prodb3;;
+- : bool = false
+# valid_production prodb4;;
+- : bool = false
+# let prods1 = [prod1;prod2;prod3;prod4];;
+val prods1 : string list list =
+  [["S"; "AB"]; ["A"; "a"]; ["B"; "b"]; ["C"; "b"]]
+# let prods2 = [prod1];;
+val prods2 : string list list = [["S"; "AB"]]
+# let prods3 = [prod1;prod2;prod3;prodb4];;
+val prods3 : string list list =
+  [["S"; "AB"]; ["A"; "a"]; ["B"; "b"]; ["s"; "cAB"]]
+# let prods4 = [prod1;prod2;prodb3;prodb4];;
+val prods4 : string list list =
+  [["S"; "AB"]; ["A"; "a"]; ["AB"; "CD"]; ["s"; "cAB"]]
+# let prods5 = [prod1;prodb2;prod3;prod4];;
+val prods5 : string list list =
+  [["S"; "AB"]; ["S"; "A"]; ["B"; "b"]; ["C"; "b"]]
+# valid_production_list prods1;;
+- : bool = true
+# valid_production_list prods2;;
+- : bool = true
+# valid_production_list prods3;;
+- : bool = false
+# valid_production_list prods4;;
+- : bool = false
+# valid_production_list prods5;;
+- : bool = false
+# #quit;;
+root@LAPTOP-NLCC5G3D:/mnt/c/Users/Eric/spring18/3520/sde2_(OCaml)#

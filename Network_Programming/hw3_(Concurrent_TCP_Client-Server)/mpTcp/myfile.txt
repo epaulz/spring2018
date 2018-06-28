@@ -1,0 +1,8 @@
+hello
+this
+is a
+test
+input file
+for
+hw3!
+:)

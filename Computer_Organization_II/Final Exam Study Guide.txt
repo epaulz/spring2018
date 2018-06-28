@@ -1,0 +1,104 @@
+CPSC 3300
+Study Guide for Final Exam
+
+The final exam will be comprehensive and include topics from the
+first two exams and later materials. The coverage will be approximately be half from the first two units (Exam 1 & Exam 2 topics) and half from the last unit (topics after Exam 2), e.g.,
+
+  Exam 1 topics (~20-25%)
+    Chapter 1 - performance, benchmarks, Amdahl's Law (~50%)
+    Appendix B - combinational and sequential logic design (~50%)
+
+  Exam 2 topics (~20-25%)
+    Chapter 4 - control logic, pipelining, instruction-level parallelism (100%)
+
+  Topics after Exam 2 (~50-60%)
+     Chapter 5 - semiconductor memory, memory hierarchies, cache, virtual memory (~80-90%)
+     Chapter 6 - parallel processing, platforms, performance, programming (~10-20%)
+
+
+
+Sample exams for the first two units have been made available before the respective exams. 
+
+The following is the study guide for the third unit.
+
+Coverage: Memory hierarchy, cache and virtual memory in Chapter 5, Flynn's taxonomy and scaling of performance of a parallel processing program in Chapter 6
+
+
+1. Be able to define or match these terms
+
+     Random access memory (RAM)
+     Static RAM (SRAM)
+     Dynamic RAM (DRAM)
+     Refresh
+  
+     Memory hierarchy
+     Locality
+     Spatial locality
+     Temporal locality
+   
+     Instruction cache
+     Data cache
+     Multilevel cache
+     
+     Cache hit - successful accessing of a block of the cache
+     Hit rate - number of times we get a cache hit / total attempted cache accesses
+     Hit time - amount of time it takes to access the cache
+
+     Cache miss - unsuccessful accessing of a block of the cache
+     Miss rate - misses in the cache divided by the total # of mem accesses to the cache
+     Miss penalty
+ - extra cycles to fetch the data to the cache from lower level of memory hierarchy
+     Global miss rate
+
+     Local miss rate
+  
+     Placement policy (fully associative, set-associative, directly mapped) - where can a block be placed in the upper level?
+     Replacement policy (LRU, FIFO, random, etc.) - which block should be replaced on a miss?
+     Write-hit policy (write-through or write-back) - what happens on a write?
+
+     Cache lines (often called cache blocks)
+     Tag
+     Valid bit
+     Dirty bit (also known as modified bit and changed bit)
+
+     Direct-mapped cache - a memory block maps to exactly one cache block
+     Set-associative cache - cache is divided into sets, each consisting of n ways.  a memory block maps to a unique set (specified by index field)
+     Fully associative cache - a memory block can be mapped to any cache block
+
+     Virtual memory
+     Page
+     Translation lookaside buffer
+     Page table
+     Virtual(logical) address / physical address
+     Address translation
+     Page fault
+
+
+     Flinn's taxonomy: SISD, SIMD, MISD, MIMD
+     Strong vs weak scaling
+     Amdahl's law for parallel processing
+
+
+
+2. Be able to:
+
+   A. Give typical capacity, latency, and block size values for the memory hierarchy components.
+
+   B. Identify at least one example of temporal or spatial locality of memory references.
+
+   C. Given memory and cache parameters, give the tag, index, and offset field sizes within the main memory address.
+
+   D. Similar questions in C for virtual memory and related questions for page tables and TLB.
+
+   E. Given an address stream and cache parameters, determine the number of misses.
+
+   F. Explain how row versus column access to a matrix affects cache misses. (E.g., discuss how misses were reduced in the matrix multiply example.)
+
+   G. Given a reference sequence and memory parameters, determine the number of page faults.
+
+   
+
+   H. Given a workload with a serial part and a parallelizeable part, determine the maximum speedup, and given # of processors determine time (strong scaling) or problem size (weak scaling)
+
+
+Be prepared to work problems as given in Homeworks 7 and 8.

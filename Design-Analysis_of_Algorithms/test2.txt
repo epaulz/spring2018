@@ -1,0 +1,17 @@
+
+- do LCS example
+- Dynamic Programming
+- be able to write code for all functions of a binary search tree (including all traversals)(try without recursion too)
+- BSTs!!!!
+- AVL Trees (rotations)
+
+
+WEIGHTED INTERVAL SCHEDULING
+- sort jobs by their finish times
+- compute p() for each job
+    - p(j) = largest index i<j such that i is compatible w/ j (finish time of i <= start time of j)
+- M is a global array where M[0] = 0
+- for j=1 to n, M[j] = max(weight[j-1]+M[p[j-1]],M[j-1])
+- return M[n] for maximum weight
+
+

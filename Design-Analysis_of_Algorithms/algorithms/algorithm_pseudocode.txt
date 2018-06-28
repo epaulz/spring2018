@@ -1,0 +1,40 @@
+Binary Search:	function search(A[1...n], x)
+							compare x with A[n/2]
+							if x == A[n/2]
+								done
+							else if x < A[n/2]
+								search A[1...(n/2)]
+							else
+								search A[(n/2)+1...n]
+								
+Merge Sort:	function merge(x[1...k1], y[1...k2])
+						if k1 == 0
+							return y[1...k2]
+						if k2 == 0
+							return x[1...k1]
+						if x[1] <= y[1]
+							return x[1] concat merge(x[2...k1], y[1...k2])
+						else
+							return y[1] concat merge(x[1...k1], y[2...k2])
+							
+Matrix Multiplication: function square_matrix_multiply_recursive(A, B)
+									n = A.rows
+									let C be a new n x n matrix
+									if n == 1
+										c11 = a11*b11
+									else partition A, B, and C as in equations
+										c11 = square_matrix_multiply_recursive(a11,b11) + square_matrix_multiply_recursive(a12,b21)
+										c12 = square_matrix_multiply_recursive(a11,b12) + square_matrix_multiply_recursive(a12,b22)
+										c21 = square_matrix_multiply_recursive(a21,b11) + square_matrix_multiply_recursive(a22,b21)
+										c22 = square_matrix_multiply_recursive(a21,b12) + square_matrix_multiply_recursive(a22,b22)
+									return C
+									
+Dijkstra's Algorithm:	function Dijkstra(V,E,s)
+FOR EACH v != s : d(v) = infinity; d(s) = 0
+FOR EACH v in V : insert v with key d(v) into priority queue
+WHILE (the priority queue is not empty)
+	u = extract_min from priority queue
+	FOR EACH edge (u,v) in E leaving u
+		IF d(v) > d(u) + w(u,v)
+		decrease-key of v to d(u) + w(u,v) in priority queue
+		d(v) = d(u) + w(u,v)

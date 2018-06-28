@@ -1,0 +1,255 @@
+[1mtrue.[0m
+
+?- ['sde1.pro'].
+
+
+[1mtrue.[0m
+
+?- table(sample_table,T).
+
+
+T = [[["11"], ["21"], ["31"], ["41"]], [["12"], ["22"], ["32"]], [["13"], ["23"]], [["14"]]].
+
+?- table(test_table1,T).
+
+
+T = [[["A"], ["A"], ["A"], ["B"], ["B"], ["B"]], [[], [], ["S", "T"], [], []], [[], ["X"], [], []], [[], ["S", "T"], []], [["X"], []], [["S", "T"]]].
+
+?- table(sample_table,Data), get_table_values_cell([2,2],Data,CL).
+
+
+Data = [[["11"], ["21"], ["31"], ["41"]], [["12"], ["22"], ["32"]], [["13"], ["23"]], [["14"]]],
+CL = ["22"].
+
+?- table(sample_table,Data), get_table_values_cell([1,4],Data,CL).
+
+
+Data = [[["11"], ["21"], ["31"], ["41"]], [["12"], ["22"], ["32"]], [["13"], ["23"]], [["14"]]],
+CL = ["14"].
+
+?- table(test_table1,Data), get_table_values_cell([2,3],Data,CL).
+
+
+Data = [[["A"], ["A"], ["A"], ["B"], ["B"], ["B"]], [[], [], ["S", "T"], [], []], [[], ["X"], [], []], [[], ["S", "T"], []], [["X"], []], [["S", "T"]]],
+CL = ["X"].
+
+?- table(test_table1,Data), get_table_values_cell([3,2],Data,CL).
+
+
+Data = [[["A"], ["A"], ["A"], ["B"], ["B"], ["B"]], [[], [], ["S", "T"], [], []], [[], ["X"], [], []], [[], ["S", "T"], []], [["X"], []], [["S", "T"]]],
+CL = ["S", "T"].
+
+?- decompositions(7,W).
+
+
+W = [[6, 1], [5, 2], [4, 3], [3, 4], [2, 5], [1, 6]].
+
+?- decompositions(10,W).
+
+
+W = [[9, 1], [8, 2], [7, 3], [6, 4], [5, 5], [4, 6], [3, 7], [2|...], [...|...]].
+
+?- decompositions(8,W).
+
+
+W = [[7, 1], [6, 2], [5, 3], [4, 4], [3, 5], [2, 6], [1, 7]].
+
+?- decompositions(2,W).
+
+
+W = [[1, 1]].
+
+?- one_product([],[],What).
+
+
+What = [].
+
+?- one_product([],["X"],What).
+
+
+What = [].
+
+?- one_product("X",[],What).
+
+
+What = [].
+
+?- one_product("X",["Y"],What).
+
+
+What = ["XY"].
+
+?- one_product("X",["Y","Z"],What).
+
+
+What = ["XY", "XZ"].
+
+?- cell_products([],[],What).
+
+
+What = [].
+
+?- cell_products([],["T"],What).
+
+
+What = [].
+
+?- cell_products(["T"],[],What).
+
+
+What = [].
+
+?- cell_products(["T"],["X"],What).
+
+
+What = ["TX"].
+
+?- cell_products(["T","U","V"],["X","Y","Z"],What).
+
+
+What = ["TX", "TY", "TZ", "UX", "UY", "UZ", "VX", "VY", "VZ"].
+
+?- productions(testing,TestProds), form_row1_cell("a",TestProds,Cell).
+
+
+TestProds = [["S", "AB"], ["S", "XB"], ["T", "AB"], ["T", "XB"], ["X", "AT"], ["A", "a"], ["B", "b"]],
+Cell = ["A"].
+
+?- productions(testing,TestProds), form_row1_cell("b",TestProds,Cell).
+
+
+TestProds = [["S", "AB"], ["S", "XB"], ["T", "AB"], ["T", "XB"], ["X", "AT"], ["A", "a"], ["B", "b"]],
+Cell = ["B"].
+
+?- productions(book,BookProds), form_row1_cell("a",BookProds,Cell).
+
+
+BookProds = [["S", "AB"], ["S", "BB"], ["A", "CC"], ["A", "AB"], ["A", "a"], ["B", "BB"], ["B", "CA"], ["B"|...], [...|...]|...],
+Cell = ["A"].
+
+?- productions(book,BookProds), form_row1_cell("b",BookProds,Cell).
+
+
+BookProds = [["S", "AB"], ["S", "BB"], ["A", "CC"], ["A", "AB"], ["A", "a"], ["B", "BB"], ["B", "CA"], ["B"|...], [...|...]|...],
+Cell = ["B", "C"].
+
+?- productions(book,BookProds), form_row1_cell("c",BookProds,Cell).
+
+
+BookProds = [["S", "AB"], ["S", "BB"], ["A", "CC"], ["A", "AB"], ["A", "a"], ["B", "BB"], ["B", "CA"], ["B"|...], [...|...]|...],
+Cell = [].
+
+?- equivalent([],[]).
+
+
+[1mtrue.[0m
+
+?- equivalent(["X","Y"],["Y","X"]).
+
+
+[1mtrue.[0m
+
+?- equivalent(["X","Y"],["Y","X","Z"]).
+
+
+[1;31mfalse.[0m
+
+?- equivalent([],["Y","X","Z"]).
+
+
+[1;31mfalse.[0m
+
+?- equivalent(["T","X","Y","Z"],["Y","X","Z"]).
+
+
+[1;31mfalse.[0m
+
+?- equivalent(["T","X","Y","Z"],["Y","X","Z","T"]).
+
+
+[1mtrue.[0m
+
+?- row_equivalent([[],[],[]],[[],[],[]]).
+
+
+[1mtrue.[0m
+
+?- row_equivalent([["X"],[],[]],[[],[],["X"]]).
+
+
+[1;31mfalse.[0m
+
+?- row_equivalent([["X"],[],[]],[["X"],[],[]]).
+
+
+[1mtrue.[0m
+
+?- row_equivalent([["X"],["X"],["Y","Z"],["Y","Z"]],[["X"],["X"],[]]).
+
+
+[1;31mfalse.[0m
+
+?- row_equivalent([["X"],["X"],["Y","Z"],["Y","Z"]],[["X"],["X"],["Z","Y"],["Z","Y"]]).
+
+
+[1mtrue.[0m
+
+?- row_equivalent([["X"],["X"],["Y","Z"],["Y","Z"]],[[],["X"],["Z","Y"],["Z","Y"]]).
+
+
+[1;31mfalse.[0m
+
+?- table(test_table1,T).
+
+
+T = [[["A"], ["A"], ["A"], ["B"], ["B"], ["B"]], [[], [], ["S", "T"], [], []], [[], ["X"], [], []], [[], ["S", "T"], []], [["X"], []], [["S", "T"]]].
+
+?- table(test_table2,T).
+
+
+T = [[["A"], ["A"], ["A"], ["B"], ["B"], ["B"]], [[], [], ["S", "T"], [], []], [[], ["X"], [], []], [[], ["S", "T"], []], [["X"], []], [["S", "T"]]].
+
+?- table(test_table_bad1,T).
+
+
+T = [[["A"], ["A"], ["A"], ["B"], ["B"], ["B"]], [[], [], ["S", "T"], [], []], [[], [], ["X"], []], [[], ["S", "T"], []], [["X"], []], [["S", "T"]]].
+
+?- table(test_table_bad2,T).
+
+
+T = [[["A"], ["A"], ["A"], ["B"], ["B"], ["B"]], [[], [], ["S", "T"], [], []], [[], ["X"], [], []], [["S", "T"], [], []], [[], ["X"]], [["S", "T"]]].
+
+?- table(test_table1,T1), table(test_table2,T2), table_equivalent(T1,T2).
+
+
+T1 = T2, T2 = [[["A"], ["A"], ["A"], ["B"], ["B"], ["B"]], [[], [], ["S", "T"], [], []], [[], ["X"], [], []], [[], ["S", "T"], []], [["X"], []], [["S", "T"]]].
+
+?- table(test_table1,T1), table(test_table_bad1,T2), table_equivalent(T1,T2).
+
+
+[1;31mfalse.[0m
+
+?- table(test_table1,T1), table(test_table_bad2,T2), table_equivalent(T1,T2).
+
+
+[1;31mfalse.[0m
+
+?- table(test_table2,T1), table(test_table_bad2,T2), table_equivalent(T1,T2).
+
+
+[1;31mfalse.[0m
+
+?- table(book,T1), table(book3,T2), table_equivalent(T1,T2).
+
+
+T1 = [[["A"], ["A"], ["B", "C"], ["B", "C"]], [["C"], ["S", "A"], ["S", "B", "A"]], [["C", "A"], ["C", "S", "A"]], [["C", "B", "S", "A"]]],
+T2 = [[["A"], ["A"], ["B", "C"], ["B", "C"]], [["C"], ["S", "A"], ["S", "B", "A"]], [["C", "A"], ["C", "S", "A"]], [["A", "S", "B", "C"]]].
+
+?- table(book,T1), table(bookbad2,T2), table_equivalent(T1,T2).
+
+
+[1;31mfalse.[0m
+
+?- noprotocol.
+
+
